@@ -1,0 +1,47 @@
+<div id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1>{{msg2}}</h1>
+        <h2>Banco de Preguntas</h2>
+        <button id="logOut" class="btn btn-primary float-right">Logout</button>
+        <form class="clearfix mb-4" action="POST">
+          <div class="form-group">
+            <label for="example-description">EMPRESA</label>
+            <textarea class="form-control" id="messageTosend" aria-describedby="example-description" placeholder="Crear Pregunta"></textarea>
+          </div>
+        </form>
+        <button id="sendMessage" data-curso="{{idCurso}}" class="{{idCurso}} btn btn-primary float-right">Crear Pregunta</button>
+        <h3>Messages:</h3>
+        <ul id="example-list" class="list-group">
+          {{#each curso}} 
+      
+
+          <li data-id="{{this.id}}" class="list-group-item">
+            <p>Pregunta: {{this.pregunta}}</p>
+
+            {{#each ../respuestas}} 
+            
+            {{#if_eq this.idPreguntas ../this.id}}
+            <h6 style="color:{{this.color}};">- {{this.respuesta}}</h1>
+            {{/if_eq}} 
+            
+            {{/each}}
+
+            <textarea class="{{this.id}} agregarPregunta" style="width:400px;height:50px" data-pregunta="{{this.id}}" placeholder="respuesta"></textarea>
+            <input class="check{{this.id}}" type="checkbox">Correcta</br>
+            <button id="{{this.id}}" class="respuesta btn btn-info" type="button">Agregar Respuesta</button>
+            <button class="btn btn-danger float-right delete">ｘ</button>
+          </li>
+          
+          {{/each}}
+
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/preguntas.js"></script>

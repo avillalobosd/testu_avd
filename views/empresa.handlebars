@@ -1,0 +1,36 @@
+<div id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1>{{msg2}}</h1>
+        <h2>Dashboard Empresa</h2>
+        <button id="logOut" class="btn btn-primary float-right">Logout</button>
+        <form class="clearfix mb-4" action="POST">
+          <div style="font-size:20px;"class="form-group">
+            <label for="example-description">Empresa: {{nombre}}</label>
+            <textarea class="form-control" id="messageTosend" aria-describedby="example-description" placeholder="Crear Curso"></textarea>
+          </div>
+        </form>
+        <button id="sendMessage" class="btn btn-primary float-right">Crear Curso</button>
+       <h3>Cursos:</h3>
+        <ul id="example-list" class="list-group">
+          {{#each curso}}
+          
+          <li data-id="{{this.id}}" class="list-group-item">
+            <p>{{this.nombre}}</p>
+            <button id="{{this.id}}" class="pregunta btn btn-info" type="button">Banco Preguntas</button>
+            <button id="{{this.id}}"class="examen btn btn-secondary" type="button">Crear Exámen</button>
+            <button id="{{this.id}}"class="curso btn btn-info" type="button">Archivos del Curso</button>
+  
+            {{!-- <button class="btn btn-danger float-right delete">ｘ</button> --}}
+          </li>
+          {{/each}}
+        </ul> 
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/empresa.js"></script>
