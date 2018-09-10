@@ -14,6 +14,12 @@ $(location).attr("href", url);
 });
 
 
+$(".examen").on("click", function () {
+  console.log(this.id);
+  url = "/crearExamen/"+this.id;
+  $(location).attr("href", url);
+  
+});
 
 
 

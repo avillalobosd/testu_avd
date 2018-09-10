@@ -1,0 +1,36 @@
+<div id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1>{{msg2}}</h1>
+        <h2>Banco de Preguntas</h2>
+        <button id="logOut" class="btn btn-primary float-right">Logout</button>
+        <form class="clearfix mb-4" action="POST">
+          <div class="form-group">
+            <label for="example-description">Numero de Preguntas</label>
+            <textarea class="form-control" id="numPreguntas" aria-describedby="example-description" placeholder="Crear Pregunta"></textarea>
+             <label for="example-description">Tiempo</label>
+            <textarea class="form-control" id="tiempo" aria-describedby="example-description" placeholder="Crear Pregunta"></textarea>
+          </div>
+        </form>
+        <button id="sendMessage" data-curso="{{idCurso}}" class="{{idCurso}} btn btn-primary float-right">Crear Pregunta</button>
+        <h3>Messages:</h3>
+        <ul id="example-list" class="list-group">
+          {{#each curso}} 
+      
+
+          <li data-id="{{this.id}}" class="list-group-item">
+            <p>Pregunta: {{this.pregunta}}   <input class="critica{{this.id}}" type="checkbox">Agregar<input class="critica{{this.id}}" type="checkbox">Crítica</p>
+          </li>
+          
+          {{/each}}
+
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/crearexamen.js"></script>

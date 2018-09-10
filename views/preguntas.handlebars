@@ -28,7 +28,7 @@
             
             {{/each}}
 
-            <textarea class="{{this.id}} agregarPregunta" style="width:400px;height:50px" data-pregunta="{{this.id}}" placeholder="respuesta"></textarea>
+            <textarea id="{{this.id}}" class="{{this.id}} agregarPregunta" style="width:400px;height:50px" data-pregunta="{{this.id}}" placeholder="respuesta"></textarea>
             <input class="check{{this.id}}" type="checkbox">Correcta</br>
             <button id="{{this.id}}" class="respuesta btn btn-info" type="button">Agregar Respuesta</button>
             <button class="btn btn-danger float-right delete">ｘ</button>

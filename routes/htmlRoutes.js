@@ -92,8 +92,6 @@ module.exports = function(app) {
     }).then(function(cursos) {
 
       db.respuestas.findAll().then(function(respuestas){
-      console.log(req.params.id); 
-      console.log(respuestas);
       res.render("preguntas", {
         curso: cursos,
         idCurso: req.params.id,
@@ -103,6 +101,24 @@ module.exports = function(app) {
       
     });
   });
+});
+
+app.get("/crearexamen/:id", function(req, res) {
+  db.preguntas.findAll({
+    where: {
+      idCurso: req.params.id,
+      
+    }
+  }).then(function(cursos) {
+
+    res.render("crearexamen", {
+      curso: cursos,
+      idCurso: req.params.id
+      
+    });
+    
+
+});
 });
 
   app.get("/usuario", function(req, res) {
