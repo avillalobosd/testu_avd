@@ -104,6 +104,10 @@ module.exports = function(app) {
 });
 
 app.get("/crearexamen/:id", function(req, res) {
+
+
+
+
   db.preguntas.findAll({
     where: {
       idCurso: req.params.id,
@@ -111,23 +115,55 @@ app.get("/crearexamen/:id", function(req, res) {
     }
   }).then(function(cursos) {
 
+    db.examenes.findAll({
+      where: {
+        idCurso: req.params.id,
+        
+      }
+    }).then(function(examenes){
     res.render("crearexamen", {
       curso: cursos,
-      idCurso: req.params.id
+      idCurso: req.params.id,
+      examenes: examenes
       
     });
     
-
+  });
 });
+//   db.preguntas.findAll({
+//     where: {
+//       idCurso: req.params.id,
+      
+//     }
+//   }).then(function(cursos) {
+// //     db.examenes.findAll({
+//       where: {
+//         idCurso: req.params.id,
+//         }.then(function(examenes){
+
+// //           res.render("crearexamen", {
+//             curso: cursos,
+//             idCurso: req.params.id,
+//             examenes: examenes
+            
+//           });
+
+
+//         }),
+      
+//     });
+
+// });
 });
 
-  app.get("/usuario", function(req, res) {
-    db.wall.findAll({order: [
-      // Will escape title and validate DESC against a list of valid direction parameters
-      ['id', 'DESC']]}).then(function(messages) {
-      console.log((messages));
-      res.render("usuario", {
-        examples: messages
+  app.get("/usuario/:id", function(req, res) {
+    db.users.findOne({where:{ id : req.params.id}}).then(function(user) {
+      db.examenes.findAll({where:{ idEmpresa: user.perteneceEmpresa}}).then(function(pertenece){
+        res.render("usuario", {
+          examanes: pertenece
+        });
+      
+
       });
       
     });

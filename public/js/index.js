@@ -14,9 +14,7 @@ $("#loginbutton").on("click", function () {
     console.log(res.mensaje);
     if (res.mensaje == "USUARIO") {
       console.log("USUARIO EQUIVOCADO");
-      alert("Usuario no Existe favor de Reigistrarse");
-      url = "/register";
-      $(location).attr("href", url);
+      alert("Usuario no Existe");
 
 
     } else {
@@ -39,7 +37,7 @@ $("#loginbutton").on("click", function () {
 
     }
     if (permisoUser == 3) {
-      url = "/usuario";
+      url = "/usuario/"  + sessionStorage.getItem("idUsuario");
       $(location).attr("href", url);
 
     }

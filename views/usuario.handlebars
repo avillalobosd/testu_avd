@@ -15,13 +15,8 @@
        
         <h3>Messages:</h3>
         <ul id="example-list" class="list-group">
-          {{#each examples}}
-          {{this.nombre}} says:  
-          <li data-id="{{this.idusuario}}" class="list-group-item">
-            <p>{{this.mensaje}}</p>
-            <p>{{this.createdAt}}</p>
-            {{!-- <button class="btn btn-danger float-right delete">ｘ</button> --}}
-          </li>
+          {{#each examanes}}
+          <p>{{this.id}}<button>Tomar Examen</button></p>
           {{/each}}
         </ul>
       </div>

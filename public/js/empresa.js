@@ -26,7 +26,7 @@ $(".examen").on("click", function () {
 $("#sendMessage").on("click", function () {
   var wall = {
     nombre: $("#messageTosend").val(),
-    idEmpresa: sessionStorage.getItem("idUsuario")
+    idEmpresa: userid
   };
   $.ajax({
     type: "POST",
@@ -38,10 +38,38 @@ $("#sendMessage").on("click", function () {
       
   }
   });
-  url = "/wall";
-        $(location).attr("href", url);
+  location.reload();
 
 
+});
+
+
+
+$("#crearUsuario").on("click", function () {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 5; i++){
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+}
+
+  var wall = {
+    perteneceEmpresa: userid,
+    nombre: text,
+    password: 123,
+    permiso: 3,
+    usuariosCreados: 0
+  };
+  $.ajax({
+    type: "POST",
+    url: "/api/registerUser",
+    data: wall,
+    success: function (msg) {
+
+      console.log(msg.mensaje);
+      
+  }
+  });
+  location.reload();
 });
 //DA EL PERMISO AL ACCESO A LA PAGINA
 var userid;

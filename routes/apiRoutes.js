@@ -112,12 +112,50 @@ module.exports = function (app) {
 
 );
 
-app.post("/api/messagePost", function(req, res) {
-  db.wall.create(req.body).then(function(dbExample) {
-    res.json(dbExample);
-    res.mensaje("AGREGADO");
-  });
+
+app.delete("/api/deletePreg", function(req, res) {
+  console.log(req.body.borra);
+  db.preguntas.destroy({
+    where: {
+       id: req.body.borra //this will be your id that you want to delete
+    }
+ }).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+   if(rowDeleted === 1){
+      console.log('Deleted successfully');
+    }
+ }, function(err){
+     console.log(err); 
+ });
+ db.respuestas.destroy({
+  where: {
+     idPreguntas: req.body.borra //this will be your id that you want to delete
+  }
+}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+ if(rowDeleted === 1){
+    console.log('Deleted successfully');
+  }
+}, function(err){
+   console.log(err); 
 });
+
+
+});
+
+app.delete("/api/deleteResp", function(req, res) {
+  console.log(req.body.borra);
+  db.respuestas.destroy({
+    where: {
+       id: req.body.borra //this will be your id that you want to delete
+    }
+ }).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+   if(rowDeleted === 1){
+      console.log('Deleted successfully');
+    }
+ }, function(err){
+     console.log(err); 
+ });
+});
+
 
 app.post("/api/crearEmpresa", function(req, res) {
   db.users.create(req.body).then(function(dbExample) {
@@ -131,6 +169,12 @@ app.post("/api/crearPregunta", function(req, res) {
   });
 });
 
+app.post("/api/crearUsuario", function(req, res) {
+
+  db.users.create(req.body).then(function(dbExample) {
+    res.json(dbExample);
+  });
+});
 
 app.post("/api/crearCurso", function(req, res) {
   db.cursos.create(req.body).then(function(dbExample) {
@@ -141,6 +185,12 @@ app.post("/api/crearCurso", function(req, res) {
 
 app.post("/api/agregaRespuesta", function(req, res) {
   db.respuestas.create(req.body).then(function(dbExample) {
+    res.json(dbExample);
+  });
+});
+
+app.post("/api/crearExamen", function(req, res) {
+  db.examenes.create(req.body).then(function(dbExample) {
     res.json(dbExample);
   });
 });

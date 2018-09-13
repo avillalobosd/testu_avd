@@ -16,6 +16,11 @@
         <button id="sendMessage" data-curso="{{idCurso}}" class="{{idCurso}} btn btn-primary float-right">Crear Pregunta</button>
         <h3>Messages:</h3>
         <ul id="example-list" class="list-group">
+          {{#each examenes}}
+          <p>Tiempo: {{this.tiempo}}  Numero Preguntas: {{this.numPreguntas}}  Críticas: {{this.criticas}}  Incluye: {{this.incluye}}</p>
+        {{/each}}
+
+
           {{#each curso}} 
       
 

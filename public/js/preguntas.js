@@ -7,13 +7,53 @@ $("#logOut").on("click", function () {
 });
 
 
+$(".deletePreg").on("click", function () {
+  
+  var del={
+    borra:($(this).attr('data-pregunta'))};
+  console.log("es "+del.borra);
+  $.ajax({
+    type: "delete",
+    url: "/api/deletePreg",
+    data: del,
+    success: function () {
+
+      console.log("llego");
+
+    }
+  });
+  
+
+  location.reload();
+});
+
+$(".deleteResp").on("click", function () {
+  
+  var del={
+    borra:($(this).attr('data-respuesta'))};
+  console.log("es "+del);
+  $.ajax({
+    type: "delete",
+    url: "/api/deleteResp",
+    data: del,
+    success: function () {
+
+      console.log("llego");
+
+    }
+  });
+  location.reload();
+
+});
+
 
 
 
 $("#sendMessage").on("click", function () {
   var wall = {
     pregunta: $("#messageTosend").val(),
-    idCurso: $(this).attr('data-curso')
+    idCurso: $(this).attr('data-curso'),
+    idEmpresa: userid
   };
   console.log(wall);
   $.ajax({
@@ -26,9 +66,7 @@ $("#sendMessage").on("click", function () {
 
     }
   });
-  url = "/preguntas/" + wall.idCurso;
-  $(location).attr("href", url);
-
+  location.reload();
 
 });
 
@@ -45,6 +83,7 @@ if (revisa){
   var wall = {
     respuesta: $("#"+this.id).val(),
     idPreguntas: this.id,
+    idEmpresa: userid,
     correcta: $(".check" + this.id).is(':checked'),
     color: color
   };

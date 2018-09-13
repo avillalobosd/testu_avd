@@ -26,30 +26,28 @@ var critica = [];
     critica.push($(this).attr('data-pregunta'));
 });
 
-console.log(agregar);
-console.log(critica);
   var wall = {
-    agregar: agregar,
-    critica: critica,
-    numpreguntas: parseInt($("#numPreguntas").val()),
+    incluye: agregar.toString(),
+    criticas: critica.toString(),
+    numPreguntas: parseInt($("#numPreguntas").val()),
     idCurso: $(this).attr('data-curso'),
-    tiempo:  parseInt($("#tiempo").val())
+    tiempo:  parseInt($("#tiempo").val()),
+    idEmpresa: userid
   };
 
   console.log(wall);
-  // console.log(wall);
-  // $.ajax({
-  //   type: "POST",
-  //   url: "/api/crearPregunta",
-  //   data: wall,
-  //   success: function (msg) {
+  console.log(wall.incluye.toString());
+  $.ajax({
+    type: "POST",
+    url: "/api/crearExamen",
+    data: wall,
+    success: function (msg) {
 
-  //     console.log(msg.mensaje);
+      console.log(msg.mensaje);
 
-  //   }
-  // });
-  // url = "/preguntas/" + wall.idCurso;
-  // $(location).attr("href", url);
+    }
+  });
+  location.reload();
 
 
 });
