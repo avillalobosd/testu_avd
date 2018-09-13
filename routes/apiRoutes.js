@@ -163,6 +163,24 @@ app.post("/api/registerUser", function(req, res) {
   });
 });
 
+app.post("/api/crearExamen", function(req, res) {
+  db.users.findOne({ where: { nombre: req.body.nombre } }).then(project =>{
+    if (project == null) {
+      db.users.create(req.body).then(function() {
+        return res.json({
+          mensaje: 'LISTO'
+        });
+      });
+
+    } else {
+      return res.json({
+        mensaje: 'USUARIO'
+      });
+      
+    }
+  });
+});
+
 
 };
 

@@ -1,3 +1,7 @@
+var cantidad=0;
+
+
+
 $("#logOut").on("click", function () {
   sessionStorage.setItem('key', " ");
   url = "/login";
@@ -11,25 +15,64 @@ $("#logOut").on("click", function () {
 
 
 $("#sendMessage").on("click", function () {
+
+  var agregar = [];
+  $('input.agregar:checkbox:checked').each(function() {
+    agregar.push($(this).attr('data-pregunta'));
+});
+
+var critica = [];
+  $('input.critica:checkbox:checked').each(function() {
+    critica.push($(this).attr('data-pregunta'));
+});
+
+console.log(agregar);
+console.log(critica);
   var wall = {
-    pregunta: $("#messageTosend").val(),
-    idCurso: $(this).attr('data-curso')
+    agregar: agregar,
+    critica: critica,
+    numpreguntas: parseInt($("#numPreguntas").val()),
+    idCurso: $(this).attr('data-curso'),
+    tiempo:  parseInt($("#tiempo").val())
   };
+
   console.log(wall);
-  $.ajax({
-    type: "POST",
-    url: "/api/crearPregunta",
-    data: wall,
-    success: function (msg) {
+  // console.log(wall);
+  // $.ajax({
+  //   type: "POST",
+  //   url: "/api/crearPregunta",
+  //   data: wall,
+  //   success: function (msg) {
 
-      console.log(msg.mensaje);
+  //     console.log(msg.mensaje);
 
-    }
-  });
-  url = "/preguntas/" + wall.idCurso;
-  $(location).attr("href", url);
+  //   }
+  // });
+  // url = "/preguntas/" + wall.idCurso;
+  // $(location).attr("href", url);
 
 
+});
+
+
+$('.agregar').click(function() {
+  if ((parseInt($("#numPreguntas").val()))>cantidad) {
+    if($(this).is(':checked')){
+    cantidad++;
+    console.log(cantidad);
+  }else{
+    cantidad--;
+    console.log(cantidad);
+  }}else if($(this).is(':checked')){
+    $(this).prop( "checked", false );
+    console.log((parseInt($("#numPreguntas").val())));
+    alert("Excederías el número de preguntas del exámen");
+  } else {
+    cantidad--;
+    console.log(cantidad);
+  }
+  
+  
 });
 
 

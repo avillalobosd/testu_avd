@@ -9,7 +9,7 @@
           <div class="form-group">
             <label for="example-description">Numero de Preguntas</label>
             <textarea class="form-control" id="numPreguntas" aria-describedby="example-description" placeholder="Crear Pregunta"></textarea>
-             <label for="example-description">Tiempo</label>
+             <label for="example-description">Tiempo en minutos</label>
             <textarea class="form-control" id="tiempo" aria-describedby="example-description" placeholder="Crear Pregunta"></textarea>
           </div>
         </form>
@@ -20,7 +20,7 @@
       
 
           <li data-id="{{this.id}}" class="list-group-item">
-            <p>Pregunta: {{this.pregunta}}   <input class="critica{{this.id}}" type="checkbox">Agregar<input class="critica{{this.id}}" type="checkbox">Crítica</p>
+            <p>Pregunta: {{this.pregunta}}   <input data-pregunta={{this.id}}  class="{{this.id}} agregar agregar{{this.id}}" type="checkbox">Agregar<input data-pregunta={{this.id}} class="{{this.id}} critica critica{{this.id}}" type="checkbox">Crítica</p>
           </li>
           
           {{/each}}
