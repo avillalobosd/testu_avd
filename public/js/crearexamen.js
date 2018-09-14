@@ -15,39 +15,62 @@ $("#logOut").on("click", function () {
 
 
 $("#sendMessage").on("click", function () {
-
+  var ex=0;
   var agregar = [];
   $('input.agregar:checkbox:checked').each(function() {
-    agregar.push($(this).attr('data-pregunta'));
+    var b=$(this).attr('data-pregunta');
+    
+    agregar.push(b);
+    
 });
 
-var critica = [];
-  $('input.critica:checkbox:checked').each(function() {
-    critica.push($(this).attr('data-pregunta'));
-});
 
   var wall = {
-    incluye: agregar.toString(),
-    criticas: critica.toString(),
     numPreguntas: parseInt($("#numPreguntas").val()),
     idCurso: $(this).attr('data-curso'),
     tiempo:  parseInt($("#tiempo").val()),
     idEmpresa: userid
   };
 
-  console.log(wall);
-  console.log(wall.incluye.toString());
+var ex;
+
+
   $.ajax({
     type: "POST",
     url: "/api/crearExamen",
     data: wall,
     success: function (msg) {
-
-      console.log(msg.mensaje);
-
+      console.log(msg.id);
+      ex=msg.id;
     }
+  }).done (function(){
+var preguntasCriticas = [];
+  $('input.critica:checkbox:checked').each(function() {
+      var b={
+      idPregunta: parseInt($(this).attr('data-pregunta')),
+      idExamen: parseInt(ex)
+    }
+    preguntasCriticas.push(b);
+    console.log(preguntasCriticas);
+
+    $.ajax({
+      type: "POST",
+      url: "/api/agregarCriticas",
+      data: {
+        criticas: JSON.stringify(preguntasCriticas)
+    },success: function (msg) {
+        console.log("enviadas");
+      }
+    });
+});
+
+
+
+
+
+
   });
-  location.reload();
+  // location.reload();
 
 
 });
