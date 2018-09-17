@@ -87,21 +87,119 @@ module.exports = function(app) {
     db.preguntas.findAll({
       where: {
         idCurso: req.params.id,
-        
       }
     }).then(function(cursos) {
-
       db.respuestas.findAll().then(function(respuestas){
       res.render("preguntas", {
         curso: cursos,
         idCurso: req.params.id,
         respuestas: respuestas
-        
       });
-      
     });
   });
 });
+
+app.get("/examen/:id/:uid", function(req, res) {
+  var usuario= req.params.uid;
+  var examen= req.params.id;
+  var curso;
+  var numPreguntas;
+  var tiempo;
+  var empresa;
+
+  db.examenes.findOne({ 
+    where : {
+      id : req.params.id}
+    
+    }).then (function(exam){
+      curso=exam.idCurso;
+      numPreguntas=exam.numPreguntas;
+      tiempo= exam.tiempo;
+      empresa= exam.idEmpresa;
+      console.log(curso);
+      console.log(numPreguntas);
+      console.log(tiempo);
+
+      db.preguntas.findAll({
+        where: {
+          idCurso: curso,
+          
+        }
+      }).then(function(cursos) {
+        function shuffle(array) {
+          var currentIndex = array.length, temporaryValue, randomIndex;
+        
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+        
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+        
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+        
+          return array;
+        }
+        
+        // Used like so
+        var arr = cursos;
+        var arrMandar =[]
+        arr = shuffle(arr);
+        for (var i=0; i<numPreguntas; i++){
+          arrMandar[i]=arr[i];
+
+        }
+        db.respuestas.findAll({
+          where: {
+            idCurso: curso,
+            
+          }
+        }).then(function(respuestas){
+
+          var tomados={
+            idUsuario : usuario,
+            idCurso : curso,
+            idExamen: examen,
+            idEmpresa: empresa
+          }
+          db.examenestomados.findOne({where : {idUsuario : usuario, idCurso: curso, idExamen: examen}}).then(project =>{
+            if (project==null){
+              db.examenestomados.create(tomados).then(function(){
+                res.render("examen", {
+                  curso: arrMandar,
+                  idCurso: req.params.id,
+                  respuestas: respuestas,
+                  examen: examen
+                  
+                });
+              });
+              
+            };
+              
+            
+
+          });
+
+         
+      
+       
+        
+      });
+    });
+
+    });
+
+
+
+});
+
+
+
+
 
 app.get("/crearexamen/:id", function(req, res) {
 

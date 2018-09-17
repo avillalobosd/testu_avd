@@ -5,18 +5,19 @@
         <h1>{{msg2}}</h1>
         <h2>This is the Wall!</h2>
         <button id="logOut" class="btn btn-primary float-right">Logout</button>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-description">USUARIO</label>
-            <textarea class="form-control" id="messageTosend" aria-describedby="example-description" placeholder="Message to Send"></textarea>
-          </div>
-        </form>
-        <button id="sendMessage" class="btn btn-primary float-right">Submit</button>
+
+
        
         <h3>Messages:</h3>
         <ul id="example-list" class="list-group">
-          {{#each examanes}}
-          <p>{{this.id}}<button>Tomar Examen</button></p>
+           {{#each examanes}}
+          
+            <li data-id="{{this.id}}"class="list-group-item">
+            <button data-id="{{this.id}}" id="{{this.id}}"class="examen btn btn-secondary" type="button">Tomar Examen</button>
+            <button data-id="{{this.id}}" id="{{this.id}}"class="curso btn btn-info" type="button">Archivos del Curso</button>
+  
+            {{!-- <button class="btn btn-danger float-right delete">ｘ</button> --}}
+           </li>
           {{/each}}
         </ul>
       </div>

@@ -85,6 +85,7 @@ if (revisa){
     idPreguntas: this.id,
     idEmpresa: userid,
     correcta: $(".check" + this.id).is(':checked'),
+    idCurso: $(this).attr("data-curso"),
     color: color
   };
   console.log(wall.idPreguntas);

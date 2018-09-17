@@ -25,14 +25,14 @@
             
             {{#if_eq this.idPreguntas ../this.id}}
             
-            <h6 id="{{this.id}}" style="color:{{this.color}};"><button data-respuesta="{{this.id}}" class="{{this.id}} btn btn-danger  deleteResp">ｘ</button>  - {{this.respuesta}} </h6>
+            <h6 id="{{this.id}}" style="color:{{this.color}};"><button data-curso="{{idCurso}}"data-respuesta="{{this.id}}" class="{{this.id}} btn btn-danger  deleteResp">ｘ</button>  - {{this.respuesta}} </h6>
             {{/if_eq}} 
             
             {{/each}}
 
             <textarea id="{{this.id}}" class="{{this.id}} agregarPregunta" style="width:400px;height:50px" data-pregunta="{{this.id}}" placeholder="respuesta"></textarea>
             <input class="check{{this.id}}" type="checkbox">Correcta</br>
-            <button id="{{this.id}}" class="respuesta btn btn-info" type="button">Agregar Respuesta</button>
+            <button data-curso="{{idCurso}}" id="{{this.id}}" class="respuesta btn btn-info" type="button">Agregar Respuesta</button>
             
           </li>
           

@@ -31,6 +31,46 @@ $("#sendMessage").on("click", function () {
 
 
 });
+
+$(".examen").on("click", function () {
+  console.log(this.id);
+  url = "/examen/"+this.id+"/"+userid;
+  $(location).attr("href", url);
+  
+  });
+
+
+
+
+
+
+// $(".examen").on("click", function () {
+
+//   console.log($(this).attr("data-id"));
+//   // var wall = {
+//   //   idusuario: userid,
+//   //   nombre: username,
+//   //   mensaje: $("#messageTosend").val()
+//   // };
+//   var examen = $(this).attr("data-id");
+//   $.ajax({
+//     type: "POST",
+//     url: "/api/tomarExamen",
+//     data: {examen: examen},
+//     success: function (msg) {
+
+//       console.log(msg);
+      
+//   }
+//   });
+//   // url = "/wall";
+//   //       $(location).attr("href", url);
+
+
+// });
+
+
+
 //DA EL PERMISO AL ACCESO A LA PAGINA
 var userid;
 var username;

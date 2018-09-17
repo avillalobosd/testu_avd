@@ -1,4 +1,4 @@
-var cantidad=0;
+var cantidad = 0;
 
 
 
@@ -15,24 +15,19 @@ $("#logOut").on("click", function () {
 
 
 $("#sendMessage").on("click", function () {
-  var ex=0;
+  event.preventDefault();
+  var ex = 0;
   var agregar = [];
-  $('input.agregar:checkbox:checked').each(function() {
-    var b=$(this).attr('data-pregunta');
-    
-    agregar.push(b);
-    
-});
-
-
   var wall = {
     numPreguntas: parseInt($("#numPreguntas").val()),
     idCurso: $(this).attr('data-curso'),
-    tiempo:  parseInt($("#tiempo").val()),
-    idEmpresa: userid
+    tiempo: parseInt($("#tiempo").val()),
+    idEmpresa: userid,
+    criticas: "a",
+    incluye: "b"
   };
-
-var ex;
+  console.log(wall);
+  var ex;
 
 
   $.ajax({
@@ -41,73 +36,118 @@ var ex;
     data: wall,
     success: function (msg) {
       console.log(msg.id);
-      ex=msg.id;
+      ex = msg.id;
     }
-  }).done (function(){
-var preguntasCriticas = [];
-  $('input.critica:checkbox:checked').each(function() {
-      var b={
-      idPregunta: parseInt($(this).attr('data-pregunta')),
-      idExamen: parseInt(ex)
-    }
-    preguntasCriticas.push(b);
-    console.log(preguntasCriticas);
-
+  }).done(function () {
+    var preguntasCriticas = [];
+    $('input.critica:checkbox:checked').each(function () {
+      var b = {
+        idPregunta: parseInt($(this).attr('data-pregunta')),
+        idExamen: parseInt(ex),
+        keycritica: parseInt($(this).attr('data-pregunta') + ex)
+      }
+      preguntasCriticas.push(b);
+      console.log("Preguntas Criticas");
+      console.log(preguntasCriticas);
+    });
+    console.log(JSON.stringify(preguntasCriticas));
+    // for (var i=0;i<preguntasCriticas.length;i++){
+    //   function varn(){
     $.ajax({
       type: "POST",
       url: "/api/agregarCriticas",
-      data: {
-        criticas: JSON.stringify(preguntasCriticas)
-    },success: function (msg) {
+      data: { data: JSON.stringify(preguntasCriticas) },
+      success: function (msg) {
         console.log("enviadas");
       }
+
+    }).done(function () {
+      var preguntasAgrega = [];
+      $('input.agregar:checkbox:checked').each(function () {
+        var c = {
+          idPregunta: parseInt($(this).attr('data-pregunta')),
+          idExamen: parseInt(ex),
+          keycritica: parseInt($(this).attr('data-pregunta') + ex)
+        }
+        preguntasAgrega.push(c);
+        console.log("Preguntas Criticas");
+      });
+      console.log(JSON.stringify(preguntasAgrega));
+      // for (var i=0;i<preguntasCriticas.length;i++){
+      //   function varn(){
+      $.ajax({
+        type: "POST",
+        url: "/api/agregarIncluye",
+        data: { data: JSON.stringify(preguntasAgrega) },
+        success: function (msg) {
+          console.log("enviadas");
+        }
+
+      }).done(function () {
+        var preguntasRandom = [];
+        $('input.agregar:checkbox:not(:checked)').each(function () {
+          var d = {
+            idPregunta: parseInt($(this).attr('data-pregunta')),
+            idExamen: parseInt(ex),
+            keycritica: parseInt($(this).attr('data-pregunta') + ex)
+          }
+          preguntasRandom.push(d);
+          console.log("Preguntas RANDOM");
+        });
+        console.log(JSON.stringify(preguntasRandom));
+        // for (var i=0;i<preguntasCriticas.length;i++){
+        //   function varn(){
+        $.ajax({
+          type: "POST",
+          url: "/api/agregarRandom",
+          data: { data: JSON.stringify(preguntasRandom) },
+          success: function (msg) {
+            console.log("enviadas");
+          }
+
+        });
+      });
+
     });
-});
-
-
-
-
-
 
   });
-  // location.reload();
-
-
 });
 
 
-$('.agregar').click(function() {
-  if ((parseInt($("#numPreguntas").val()))>cantidad) {
-    if($(this).is(':checked')){
-    cantidad++;
-    console.log(cantidad);
-  }else{
-    cantidad--;
-    console.log(cantidad);
-  }}else if($(this).is(':checked')){
-    $(this).prop( "checked", false );
+
+$('.agregar').click(function () {
+  if ((parseInt($("#numPreguntas").val())) > cantidad) {
+    if ($(this).is(':checked')) {
+      cantidad++;
+      console.log(cantidad);
+    } else {
+      cantidad--;
+      console.log(cantidad);
+    }
+  } else if ($(this).is(':checked')) {
+    $(this).prop("checked", false);
     console.log((parseInt($("#numPreguntas").val())));
     alert("Excederías el número de preguntas del exámen");
   } else {
     cantidad--;
     console.log(cantidad);
   }
-  
-  
+
+
 });
 
 
 $(".respuesta").on("click", function () {
   var color = "red";
-  var revisa =$(".check" + this.id).is(':checked');
+  var revisa = $(".check" + this.id).is(':checked');
 
-if (revisa){
-  color="green";
-}
+  if (revisa) {
+    color = "green";
+  }
 
 
   var wall = {
-    respuesta: $("#"+this.id).val(),
+    respuesta: $("#" + this.id).val(),
     idPreguntas: this.id,
     correcta: $(".check" + this.id).is(':checked'),
     color: color
